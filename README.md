@@ -1,6 +1,6 @@
 # Site do Processo Vivo (www.processovivo.com.br)
 
-Página de vendas estática. Versão no ar: **v1.3.0** (05/11/2026). A versão aparece nos comentários do topo do `index.html`.
+Página de vendas estática. Versão no ar: **v1.4.3** (05/11/2026). A versão aparece nos comentários do topo do `index.html`.
 
 O sistema (app.processovivo.com.br) fica em outro repositório: `webmedula/processovivo`.
 
@@ -18,10 +18,11 @@ Veja o passo a passo em `COMO-ATUALIZAR.md`.
 | `favicon.svg`, `favicon-32.png` | ícone da aba |
 | `apple-touch-icon.png` | ícone ao salvar na tela do celular |
 | `og-image.png` | imagem do link compartilhado |
+| `img/processovivo-logo.svg`, `img/processovivo-logo-escuro.svg`, `img/processovivo-simbolo.svg` | logos oficiais (opcionais para o site) |
 | `robots.txt`, `sitemap.xml` | indexação no Google |
-| `LEIA-ME.md` | notas da v1.3.0 (não vai para o servidor) |
+| `LEIA-ME.md` | notas da versão (não vai para o servidor) |
 
-As páginas de Termos (`/termos`) e Privacidade (`/privacidade`) continuam só no servidor por enquanto e não são tocadas pela publicação.
+As páginas de Termos (`termos.html`) e Privacidade (`privacidade.html`) continuam só no servidor por enquanto e não são tocadas pela publicação.
 
 ## Ajustes rápidos no `index.html`
 
