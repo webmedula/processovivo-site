@@ -1,6 +1,6 @@
 # Site do Processo Vivo (www.processovivo.com.br)
 
-Página de vendas estática. Versão no ar: **v1.4.3** (05/11/2026). A versão aparece nos comentários do topo do `index.html`.
+Página de vendas estática. Versão no ar: **v1.4.4** (08/11/2026), com o chat do Evo CRM. A versão aparece nos comentários do topo do `index.html`.
 
 O sistema (app.processovivo.com.br) fica em outro repositório: `webmedula/processovivo`.
 

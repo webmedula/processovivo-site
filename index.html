@@ -28,7 +28,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!--
-  SITE DE VENDAS — Processo Vivo — site v1.4.3 (05/11/2026) — versão para produção
+  SITE DE VENDAS — Processo Vivo — site v1.4.4 (08/11/2026) — versão para produção
+  v1.4.4: chat com a equipe (widget do Evo CRM, crm.processovivo.com.br) no canto direito.
   v1.4.3: card da IA sem “processo inteiro” (a análise do processo ainda não é divulgada).
   v1.4.2: texto de abertura sem “Justiça Estadual, Federal e do Trabalho”.
   v1.4.1: logos trocados pelos arquivos oficiais enviados (processovivo-logo.svg no tema claro,
@@ -703,7 +704,7 @@ p{margin:0}
     <div class="rodape-legal">
       <!-- CNPJ: para mostrar, acrescente " · CNPJ 00.000.000/0000-00" depois do nome, na linha abaixo -->
       <p>Processo Vivo é fornecido por Autran Rocha Sociedade Individual de Advocacia · Goiânia/GO</p>
-      <p>© <span id="ano">2026</span> Processo Vivo · site v1.4.3</p>
+      <p>© <span id="ano">2026</span> Processo Vivo · site v1.4.4</p>
     </div>
   </div>
 </footer>
@@ -929,6 +930,22 @@ p{margin:0}
     .then(function (c) { clearTimeout(prazo); desenhar(c); })
     .catch(function () { clearTimeout(prazo); semPlanos(); });
 })();
+</script>
+<!-- Chat com a equipe (Evo CRM) — site v1.4.4 -->
+<script>
+  (function(d,t){
+    var SDK_BASE = 'https://crm.processovivo.com.br';
+    var WIDGET_BASE = 'https://crm.processovivo.com.br';
+    var s = d.createElement(t); var x = d.getElementsByTagName(t)[0];
+    window.evoChatSettings = {"position":"right","type":"standard","launcherTitle":"Chat com a equipe","apiBase":"https://crmapi.processovivo.com.br"};
+    s.src = SDK_BASE + '/widget-sdk/sdk.min.js'; s.async = true; s.defer = true;
+    x.parentNode.insertBefore(s,x);
+    s.onload = function(){
+      if(window.evoChatSDK && window.evoChatSDK.run){
+        window.evoChatSDK.run({ baseUrl: WIDGET_BASE, websiteToken: 'xDzxULbKdP2LR6gBSsDWxARN' });
+      }
+    };
+  })(document,'script');
 </script>
 </body>
 </html>
