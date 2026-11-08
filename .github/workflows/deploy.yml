@@ -1,4 +1,4 @@
-# Publicação do site www.processovivo.com.br (kit v1.0.4)
+# Publicação do site www.processovivo.com.br (kit v1.0.5)
 # A cada push na main, envia os arquivos do site para o servidor (CyberPanel) por SSH + rsync.
 # Segredos necessários (Settings > Secrets and variables > Actions):
 #   SSH_HOST  - IP ou nome do servidor
@@ -61,7 +61,7 @@ jobs:
             echo "::error::A chave em SSH_KEY está incompleta ou com formato errado. Gere de novo em base64 (veja COMO-ATUALIZAR.md, 2.1)."
             exit 1
           fi
-          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh-keyscan -T 20 -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || echo "::notice::ssh-keyscan sem resposta; a chave do servidor será aceita na conexão."
 
       - name: Enviar os arquivos (rsync)
         if: steps.cfg.outputs.ok == 'true'
@@ -78,7 +78,7 @@ jobs:
           rsync -rltvz --checksum $OWNER_OPT \
             --chmod=D755,F644 \
             --exclude '.git/' --exclude '.github/' --exclude 'README.md' --exclude 'COMO-ATUALIZAR.md' --exclude 'LEIA-ME.md' --exclude '.gitignore' --exclude '*.zip' \
-            -e "ssh -i ~/.ssh/id_deploy -p ${SSH_PORT:-22}" \
+            -e "ssh -i ~/.ssh/id_deploy -p ${SSH_PORT:-22} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=30 -o BatchMode=yes" \
             ./ "$SSH_USER@$SSH_HOST:${SITE_DIR%/}/"
 
       - name: Limpar a chave
