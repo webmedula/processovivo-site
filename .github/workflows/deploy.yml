@@ -1,12 +1,12 @@
-# Publicação do site www.processovivo.com.br (kit v1.0.2)
+# Publicação do site www.processovivo.com.br (kit v1.0.3)
 # A cada push na main, envia os arquivos do site para o servidor (CyberPanel) por SSH + rsync.
 # Segredos necessários (Settings > Secrets and variables > Actions):
 #   SSH_HOST  - IP ou nome do servidor
 #   SSH_PORT  - porta do SSH (normalmente 22)
-#   SSH_USER  - usuário do SSH (ex.: root)
+#   SSH_USER  - usuário do próprio site no CyberPanel (ex.: proce1234). Não use root.
 #   SSH_KEY   - chave privada SSH (conteúdo inteiro do arquivo, com as linhas BEGIN/END)
 #   SITE_DIR  - pasta do site no servidor (ex.: /home/processovivo.com.br/public_html)
-#   SITE_OWNER - dono dos arquivos do site no CyberPanel (ex.: proce1234), para manter as permissões
+#   SITE_OWNER - opcional: só se SSH_USER for root (não recomendado)
 name: Publicar site
 
 on:
