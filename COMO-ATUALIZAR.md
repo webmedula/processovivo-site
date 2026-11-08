@@ -1,4 +1,4 @@
-# Site do Processo Vivo no GitHub — passo a passo (kit v1.0.3)
+# Site do Processo Vivo no GitHub — passo a passo (kit v1.0.4)
 
 Objetivo: o site www.processovivo.com.br passa a morar num repositório do GitHub. Para atualizar, você sobe o arquivo novo no GitHub (pelo navegador ou pelo GitHub Desktop) e o site se publica sozinho no servidor, em cerca de 1 minuto.
 
@@ -32,11 +32,11 @@ echo "no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty $(cat /roo
 chown -R "$SITEUSER:$SITEUSER" "$SITEHOME/.ssh"
 chmod 700 "$SITEHOME/.ssh"
 chmod 600 "$SITEHOME/.ssh/authorized_keys"
-cat /root/github_deploy_site
+base64 -w0 /root/github_deploy_site; echo
 ```
 
 - A primeira linha que aparece mostra o **usuário do site** (ex.: `proce1234`). Anote.
-- O fim mostra a **chave privada** (de `-----BEGIN OPENSSH PRIVATE KEY-----` até `-----END OPENSSH PRIVATE KEY-----`). Copie tudo, com a primeira e a última linha. Não envie essa chave para ninguém.
+- A última linha é a **chave privada em base64**: um texto comprido, numa linha só, sem espaços (normalmente começa com `LS0tLS1CRUdJTi`). Copie a linha inteira. Assim a cópia pelo terminal do navegador não quebra a chave. Não envie essa chave para ninguém.
 
 Depois de cadastrar a chave no GitHub (2.2), apague a cópia do servidor:
 
@@ -53,7 +53,7 @@ No site do GitHub, no repositório `processovivo-site`: **Settings > Secrets and
 | `SSH_HOST` | `145.223.92.68` |
 | `SSH_PORT` | `22` (ou a porta do seu SSH) |
 | `SSH_USER` | o usuário do site anotado no 2.1 (ex.: `proce1234`) — **não use root** |
-| `SSH_KEY` | a chave privada copiada no 2.1 |
+| `SSH_KEY` | a chave em base64 copiada no 2.1 (uma linha só) |
 | `SITE_DIR` | `/home/processovivo.com.br/public_html` |
 
 Não crie o `SITE_OWNER`: como o envio já é feito pelo dono dos arquivos, ele não é necessário.
@@ -65,7 +65,8 @@ Não crie o `SITE_OWNER`: como o envio já é feito pelo dono dos arquivos, ele 
 No GitHub: aba **Actions > Publicar site > Run workflow**. Em cerca de 1 minuto deve aparecer o sinal verde. Abra www.processovivo.com.br, force a atualização (Ctrl+F5) e confira se continua tudo igual (é a mesma v1.3.0 que já está no ar).
 
 Se der vermelho, clique na execução para ver o erro. Os mais comuns:
-- `Permission denied (publickey)`: a chave pública não entrou no `authorized_keys` ou o `SSH_KEY` foi colado incompleto.
+- `A chave em SSH_KEY está incompleta` ou `error in libcrypto`: a chave foi colada quebrada. Gere a versão em base64 (2.1) e edite o segredo `SSH_KEY`.
+- `Permission denied (publickey)`: a chave pública não entrou no `authorized_keys` do usuário do site, ou o `SSH_USER` está errado.
 - `Connection timed out`: o firewall do servidor (CyberPanel > Security > Firewall) está bloqueando a porta do SSH para fora.
 
 ---

@@ -1,10 +1,10 @@
-# Publicação do site www.processovivo.com.br (kit v1.0.3)
+# Publicação do site www.processovivo.com.br (kit v1.0.4)
 # A cada push na main, envia os arquivos do site para o servidor (CyberPanel) por SSH + rsync.
 # Segredos necessários (Settings > Secrets and variables > Actions):
 #   SSH_HOST  - IP ou nome do servidor
 #   SSH_PORT  - porta do SSH (normalmente 22)
 #   SSH_USER  - usuário do próprio site no CyberPanel (ex.: proce1234). Não use root.
-#   SSH_KEY   - chave privada SSH (conteúdo inteiro do arquivo, com as linhas BEGIN/END)
+#   SSH_KEY   - chave privada SSH: em base64 numa linha só (recomendado) ou o texto com as linhas BEGIN/END
 #   SITE_DIR  - pasta do site no servidor (ex.: /home/processovivo.com.br/public_html)
 #   SITE_OWNER - opcional: só se SSH_USER for root (não recomendado)
 name: Publicar site
@@ -51,8 +51,16 @@ jobs:
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
           mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          if printf '%s' "$SSH_KEY" | grep -q 'BEGIN'; then
+            printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_deploy
+          else
+            printf '%s' "$SSH_KEY" | tr -d ' \r\n' | base64 -d > ~/.ssh/id_deploy
+          fi
           chmod 600 ~/.ssh/id_deploy
+          if ! ssh-keygen -y -f ~/.ssh/id_deploy > /dev/null 2>&1; then
+            echo "::error::A chave em SSH_KEY está incompleta ou com formato errado. Gere de novo em base64 (veja COMO-ATUALIZAR.md, 2.1)."
+            exit 1
+          fi
           ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
       - name: Enviar os arquivos (rsync)
