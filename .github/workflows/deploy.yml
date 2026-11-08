@@ -1,4 +1,4 @@
-# Publicação do site www.processovivo.com.br (kit v1.0.1)
+# Publicação do site www.processovivo.com.br (kit v1.0.2)
 # A cada push na main, envia os arquivos do site para o servidor (CyberPanel) por SSH + rsync.
 # Segredos necessários (Settings > Secrets and variables > Actions):
 #   SSH_HOST  - IP ou nome do servidor
@@ -69,7 +69,7 @@ jobs:
           # Sem --delete: arquivos que existem só no servidor (ex.: .well-known do SSL) não são apagados.
           rsync -rltvz --checksum $OWNER_OPT \
             --chmod=D755,F644 \
-            --exclude '.git/' --exclude '.github/' --exclude 'README.md' --exclude 'COMO-ATUALIZAR.md' --exclude '.gitignore' \
+            --exclude '.git/' --exclude '.github/' --exclude 'README.md' --exclude 'COMO-ATUALIZAR.md' --exclude 'LEIA-ME.md' --exclude '.gitignore' --exclude '*.zip' \
             -e "ssh -i ~/.ssh/id_deploy -p ${SSH_PORT:-22}" \
             ./ "$SSH_USER@$SSH_HOST:${SITE_DIR%/}/"
 

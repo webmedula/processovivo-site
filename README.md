@@ -1,18 +1,30 @@
 # Site do Processo Vivo (www.processovivo.com.br)
 
-Página de vendas estática. Versão atual do site: **v2.2.0** (a versão aparece no rodapé e na tag `generator` do `index.html`).
+Página de vendas estática. Versão no ar: **v1.3.0** (05/11/2026). A versão aparece nos comentários do topo do `index.html`.
 
 O sistema (app.processovivo.com.br) fica em outro repositório: `webmedula/processovivo`.
 
 ## Como funciona a publicação
 
-Cada alteração enviada para a branch `main` publica o site sozinha, pelo GitHub Actions (`.github/workflows/deploy.yml`), que copia os arquivos para o servidor do CyberPanel por SSH.
+Cada alteração enviada para a branch `main` publica o site sozinha, pelo GitHub Actions (`.github/workflows/deploy.yml`), que copia os arquivos para o `public_html` do servidor do CyberPanel por SSH. A publicação não apaga nada do servidor.
 
 Veja o passo a passo em `COMO-ATUALIZAR.md`.
 
 ## O que fica aqui
 
-- `index.html` — página de vendas (arquivo único: CSS, JS e ilustrações embutidos)
-- `termos.html`, `privacidade.html` — documentos legais
-- `img/` — logo, favicon, imagem do sistema (`carteira-claro.webp`), imagem de compartilhamento (`og.png`)
-- `fontes/` — fontes usadas pelos termos e pela privacidade
+| Arquivo | Para que serve |
+|---|---|
+| `index.html` | a página (planos e preços vêm do app, em `GET /v1/planos`) |
+| `favicon.svg`, `favicon-32.png` | ícone da aba |
+| `apple-touch-icon.png` | ícone ao salvar na tela do celular |
+| `og-image.png` | imagem do link compartilhado |
+| `robots.txt`, `sitemap.xml` | indexação no Google |
+| `LEIA-ME.md` | notas da v1.3.0 (não vai para o servidor) |
+
+As páginas de Termos (`/termos`) e Privacidade (`/privacidade`) continuam só no servidor por enquanto e não são tocadas pela publicação.
+
+## Ajustes rápidos no `index.html`
+
+- Dias de teste: bloco CONFIG no fim do arquivo, `DIAS_TESTE`.
+- CNPJ no rodapé: procure por `CNPJ:`.
+- Preços e planos: no /admin do app (o site lê sozinho).
