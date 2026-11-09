@@ -1,3 +1,11 @@
+# Site v1.4.5 (09/11/2026)
+
+- Pixel da Meta (1514052090555698) atrás de uma faixa de cookies: só carrega depois de "Aceitar". "Recusar" não carrega nada.
+- Link "Cookies" no rodapé reabre a faixa. A escolha fica no navegador (`pv_cookies`).
+- Eventos: PageView; Lead no clique em links com `conta=1`; InitiateCheckout em links com `assinar=1`.
+- Política de Privacidade e Termos v1.7 entram no repositório e são publicados juntos (a Política cita o Pixel e o chat).
+- Depois de publicar: `PROCESSOVIVO_TERMOS_VERSAO=1.7` no Easypanel do app + Deploy.
+
 # Site de vendas Processo Vivo — v1.4.3 (05/11/2026)
 
 Versão para produção do site www.processovivo.com.br. O visual é o mesmo da v1.2.0 aprovada.

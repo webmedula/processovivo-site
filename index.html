@@ -28,7 +28,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!--
-  SITE DE VENDAS — Processo Vivo — site v1.4.4 (08/11/2026) — versão para produção
+  SITE DE VENDAS — Processo Vivo — site v1.4.5 (09/11/2026) — versão para produção
+  v1.4.5: Pixel da Meta (1514052090555698) só depois de "Aceitar" na faixa de cookies; link "Cookies" no rodapé;
+  Lead no clique em links com conta=1, InitiateCheckout em links com assinar=1. Vai junto com a Política v1.7.
   v1.4.4: chat com a equipe (widget do Evo CRM, crm.processovivo.com.br) no canto direito.
   v1.4.3: card da IA sem “processo inteiro” (a análise do processo ainda não é divulgada).
   v1.4.2: texto de abertura sem “Justiça Estadual, Federal e do Trabalho”.
@@ -698,13 +700,14 @@ p{margin:0}
           <li><a href="mailto:contato@processovivo.com.br">contato@processovivo.com.br</a></li>
           <li><a href="/termos.html">Termos de Uso</a></li>
           <li><a href="/privacidade.html">Política de Privacidade</a></li>
+          <li><a href="#" data-pv-cookies>Cookies</a></li>
         </ul>
       </div>
     </div>
     <div class="rodape-legal">
       <!-- CNPJ: para mostrar, acrescente " · CNPJ 00.000.000/0000-00" depois do nome, na linha abaixo -->
       <p>Processo Vivo é fornecido por Autran Rocha Sociedade Individual de Advocacia · Goiânia/GO</p>
-      <p>© <span id="ano">2026</span> Processo Vivo · site v1.4.4</p>
+      <p>© <span id="ano">2026</span> Processo Vivo · site v1.4.5</p>
     </div>
   </div>
 </footer>
@@ -947,5 +950,66 @@ p{margin:0}
     };
   })(document,'script');
 </script>
+<!-- Faixa de cookies + Pixel da Meta — site v1.4.5. O Pixel só carrega depois de "Aceitar" (LGPD, art. 7º, I).
+     A escolha fica no navegador (localStorage "pv_cookies"); o link "Cookies" do rodapé reabre a faixa. -->
+<div id="pv-cookies" role="dialog" aria-live="polite" aria-label="Cookies" hidden
+  style="position:fixed;left:16px;right:16px;bottom:16px;z-index:2147483000;max-width:640px;margin:0 auto;background:#0b192c;color:#fff;border-radius:12px;padding:16px 18px;font:15px/1.5 system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)">
+  <p style="margin:0 0 12px">Usamos cookies de publicidade da Meta (Facebook e Instagram) para medir nossos anúncios. Eles só são usados se você aceitar. <a href="/privacidade.html" style="color:#7fd4ff">Saiba mais</a></p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+    <button type="button" data-pv-escolha="nao" style="padding:8px 14px;border-radius:8px;border:1px solid #fff;background:transparent;color:#fff;cursor:pointer">Recusar</button>
+    <button type="button" data-pv-escolha="sim" style="padding:8px 14px;border-radius:8px;border:0;background:#00c853;color:#0b192c;font-weight:700;cursor:pointer">Aceitar</button>
+  </div>
+</div>
+<script>
+(function () {
+  var PIXEL = '1514052090555698';
+  var CHAVE = 'pv_cookies';
+  var faixa = document.getElementById('pv-cookies');
+  var carregado = false;
+
+  function ler() { try { return localStorage.getItem(CHAVE); } catch (e) { return null; } }
+  function gravar(v) { try { localStorage.setItem(CHAVE, v); } catch (e) {} }
+
+  function carregarPixel() {
+    if (carregado) return;
+    carregado = true;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', PIXEL);
+    fbq('track', 'PageView');
+  }
+
+  function aplicar(v) {
+    faixa.hidden = true;
+    if (v === 'sim') carregarPixel();
+    else if (carregado && window.fbq) fbq('consent', 'revoke');
+  }
+
+  faixa.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-pv-escolha]');
+    if (!b) return;
+    var v = b.getAttribute('data-pv-escolha');
+    gravar(v);
+    aplicar(v);
+  });
+
+  document.addEventListener('click', function (ev) {
+    if (ev.target.closest('[data-pv-cookies]')) { ev.preventDefault(); faixa.hidden = false; return; }
+    if (!carregado || !window.fbq) return;
+    var a = ev.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('assinar=1') !== -1) fbq('track', 'InitiateCheckout');
+    else if (href.indexOf('conta=1') !== -1) fbq('track', 'Lead');
+  }, true);
+
+  var atual = ler();
+  if (atual === 'sim' || atual === 'nao') aplicar(atual); else faixa.hidden = false;
+})();
+</script>
+<noscript><!-- Sem JavaScript não há consentimento registrado: o Pixel não carrega. --></noscript>
 </body>
 </html>
