@@ -1,6 +1,6 @@
 # Site do Processo Vivo (www.processovivo.com.br)
 
-Página de vendas estática. Versão no ar: **v1.4.4** (08/11/2026), com o chat do Evo CRM. A versão aparece nos comentários do topo do `index.html`.
+Página de vendas estática. Versão: **v1.4.5** (09/11/2026), com o chat do Evo CRM e o Pixel da Meta atrás da faixa de cookies. A versão aparece nos comentários do topo do `index.html`.
 
 O sistema (app.processovivo.com.br) fica em outro repositório: `webmedula/processovivo`.
 
@@ -20,9 +20,10 @@ Veja o passo a passo em `COMO-ATUALIZAR.md`.
 | `og-image.png` | imagem do link compartilhado |
 | `img/processovivo-logo.svg`, `img/processovivo-logo-escuro.svg`, `img/processovivo-simbolo.svg` | logos oficiais (opcionais para o site) |
 | `robots.txt`, `sitemap.xml` | indexação no Google |
+| `privacidade.html`, `termos.html` | Política de Privacidade e Termos de Uso (v1.7, desde 09/11/2026) |
 | `LEIA-ME.md` | notas da versão (não vai para o servidor) |
 
-As páginas de Termos (`termos.html`) e Privacidade (`privacidade.html`) continuam só no servidor por enquanto e não são tocadas pela publicação.
+Desde a v1.4.5, os Termos (`termos.html`) e a Privacidade (`privacidade.html`) moram aqui e são publicados junto com o site. O Pixel da Meta só pode ficar no ar com uma Política que o cite (v1.7 ou posterior).
 
 ## Ajustes rápidos no `index.html`
 
