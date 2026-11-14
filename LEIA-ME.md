@@ -1,3 +1,9 @@
+# Site v1.4.6 (14/11/2026)
+
+- Fundo do herói com a cena do vídeo "Processo Vídeo vs1" (advogada olhando os papéis voando), em `img/heroi-papeis.webp` (24 KB). No celular, a cena fica abaixo dos botões.
+- Leve movimento ao rolar: a cena desce e esmaece, o texto sobe um pouco. Sem animação para quem desativa movimento no aparelho.
+- Layout, textos, chat, cookies, Pixel e planos sem mudança.
+
 # Site v1.4.5 (09/11/2026)
 
 - Pixel da Meta (1514052090555698) atrás de uma faixa de cookies: só carrega depois de "Aceitar". "Recusar" não carrega nada.
