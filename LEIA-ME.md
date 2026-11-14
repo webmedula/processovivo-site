@@ -1,15 +1,8 @@
-# Site v1.5.1 (14/11/2026)
+# Site v1.4.6 (14/11/2026)
 
-- Herói refeito: título à esquerda, texto e botões à direita; a tela da contestação, recortada e maior, sobre painel marinho com textura e leve paralaxe (`img/app-pasta-foco.webp` e `-escuro-foco`).
-- Momento de destaque na seção do problema: 361 quadrados, um por andamento, que se enchem ao rolar a partir dos 8 do diário. Com movimento reduzido, mostra direto os 361.
-
-# Site v1.5.0 (14/11/2026)
-
-- Visual novo, para tirar a "cara de IA": fonte Schibsted Grotesk (números em IBM Plex Mono), o verde do logo como única cor de destaque, botões marinho, cantos iguais em tudo.
-- Telas reais do aplicativo, com processo e partes fictícios, no lugar da vitrine animada: `img/app-pasta.webp` (trocada pela versão recortada na v1.5.1) e `img/app-atualizacoes.webp` (e as versões `-escuro` para o tema escuro).
-- Números medidos (8 x 361 andamentos; 278 documentos; 130 processos por OAB) no lugar do contador animado.
-- Recursos em lista, sem a fileira de cartões iguais; segurança e cobertura em tabela; textos sem travessão.
-- Sem mudança: chat do Evo, faixa de cookies, Pixel, planos lidos do app, Termos e Privacidade.
+- Fundo do herói com a cena do vídeo "Processo Vídeo vs1" (advogada olhando os papéis voando), em `img/heroi-papeis.webp` (24 KB). No celular, a cena fica abaixo dos botões.
+- Leve movimento ao rolar: a cena desce e esmaece, o texto sobe um pouco. Sem animação para quem desativa movimento no aparelho.
+- Layout, textos, chat, cookies, Pixel e planos sem mudança.
 
 # Site v1.4.5 (09/11/2026)
 
