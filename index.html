@@ -28,7 +28,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!--
-  SITE DE VENDAS — Processo Vivo — site v1.4.6 (14/11/2026) — versão para produção
+  SITE DE VENDAS — Processo Vivo — site v1.4.7 (14/11/2026) — versão para produção
+  v1.4.7: o fundo do herói passa a ser o vídeo em loop (img/heroi-papeis.mp4, 360 KB, sem áudio, só a cena dos papéis); a imagem fica como capa e para quem pede menos movimento ou economia de dados
   v1.4.6: fundo do herói com a cena do vídeo (advogada e papéis voando), em img/heroi-papeis.webp; leve movimento na rolagem (sem animação com movimento reduzido)
   v1.4.5: Pixel da Meta (1514052090555698) só depois de "Aceitar" na faixa de cookies; link "Cookies" no rodapé;
   Lead no clique em links com conta=1, InitiateCheckout em links com assinar=1. Vai junto com a Política v1.7.
@@ -340,7 +341,7 @@ p{margin:0}
 .heroi-fundo{position:absolute;top:0;bottom:0;right:0;width:min(54%,840px);pointer-events:none;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 12%,rgba(0,0,0,.55) 38%,#000 60%),linear-gradient(180deg,transparent 0,#000 14%,#000 78%,transparent 100%);
   -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,transparent 12%,rgba(0,0,0,.55) 38%,#000 60%),linear-gradient(180deg,transparent 0,#000 14%,#000 78%,transparent 100%);mask-composite:intersect}
-.heroi-fundo img{display:block;width:100%;height:100%;object-fit:cover;object-position:52% 32%}
+.heroi-fundo video{display:block;width:100%;height:100%;object-fit:cover;object-position:52% 32%}
 .heroi:has(.heroi-fundo)::before{opacity:.5}
 @media (max-width:980px){
   .heroi{padding-bottom:0;display:flex;flex-direction:column}.heroi-fundo{order:2}
@@ -348,8 +349,6 @@ p{margin:0}
     -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 82%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 82%,transparent 100%)}
 }
 @media (prefers-reduced-motion:no-preference){
-  .heroi-fundo img{animation:papeis-respira 18s ease-in-out infinite alternate}
-  @keyframes papeis-respira{from{transform:scale(1)}to{transform:scale(1.06)}}
   @supports (animation-timeline:scroll()){
     .heroi-fundo{animation:heroi-rola linear both;animation-timeline:scroll(root);animation-range:0 640px}
     @keyframes heroi-rola{to{transform:translateY(90px);opacity:.35}}
@@ -449,7 +448,7 @@ p{margin:0}
 <main id="inicio">
   <!-- HERÓI -->
   <section class="heroi" aria-labelledby="titulo">
-    <div class="heroi-fundo" aria-hidden="true"><img src="img/heroi-papeis.webp" alt="" width="900" height="900" fetchpriority="high" decoding="async"></div>
+    <div class="heroi-fundo" aria-hidden="true"><video id="heroi-video" muted loop playsinline preload="none" poster="img/heroi-papeis.webp" width="640" height="640" tabindex="-1"><source src="img/heroi-papeis.mp4" type="video/mp4"></video></div>
     <div class="envolve">
       <div>
         <span class="selo"><span class="pulso" aria-hidden="true"></span>Verificação automática, todos os dias</span>
@@ -731,7 +730,7 @@ p{margin:0}
     <div class="rodape-legal">
       <!-- CNPJ: para mostrar, acrescente " · CNPJ 00.000.000/0000-00" depois do nome, na linha abaixo -->
       <p>Processo Vivo é fornecido por Autran Rocha Sociedade Individual de Advocacia · Goiânia/GO</p>
-      <p>© <span id="ano">2026</span> Processo Vivo · site v1.4.6</p>
+      <p>© <span id="ano">2026</span> Processo Vivo · site v1.4.7</p>
     </div>
   </div>
 </footer>
@@ -1035,5 +1034,18 @@ p{margin:0}
 })();
 </script>
 <noscript><!-- Sem JavaScript não há consentimento registrado: o Pixel não carrega. --></noscript>
+<script>
+/* v1.4.7: o vídeo do topo só toca para quem não pediu menos movimento nem economia de dados; senão fica a imagem parada (poster). */
+(function () {
+  var v = document.getElementById('heroi-video');
+  if (!v) return;
+  var mm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  var economia = navigator.connection && navigator.connection.saveData;
+  function tocar() { if (mm && mm.matches) return; v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  if (!economia) { if (document.readyState === 'complete') tocar(); else window.addEventListener('load', tocar); }
+  if (mm && mm.addEventListener) mm.addEventListener('change', function () { if (mm.matches) v.pause(); else if (!economia) tocar(); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) v.pause(); else if (!economia && !(mm && mm.matches)) tocar(); });
+})();
+</script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+# Site v1.4.7 (14/11/2026)
+
+- O fundo do topo agora é o vídeo, com os papéis voando de verdade: só a cena da advogada (os 4,4 s iniciais, indo e voltando, 8,8 s em loop), sem áudio, `img/heroi-papeis.mp4` (360 KB). A tela com o logo escrito errado ficou de fora.
+- A imagem `img/heroi-papeis.webp` vira a capa: aparece enquanto o vídeo carrega e fica parada para quem desativa animação ou usa economia de dados.
+
 # Site v1.4.6 (14/11/2026)
 
 - Fundo do herói com a cena do vídeo "Processo Vídeo vs1" (advogada olhando os papéis voando), em `img/heroi-papeis.webp` (24 KB). No celular, a cena fica abaixo dos botões.
