@@ -28,8 +28,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!--
-  SITE DE VENDAS — Processo Vivo — site v1.5.0 (14/11/2026) — versão para produção
+  SITE DE VENDAS — Processo Vivo — site v1.5.1 (14/11/2026) — versão para produção
   v1.5.0: visual novo, menos "cara de IA": fonte Schibsted Grotesk, um verde só como destaque, telas reais do app
+  v1.5.1: herói com título à esquerda e chamada à direita, tela da contestação sobre painel marinho com leve paralaxe; momento de destaque: 361 quadrados que se enchem ao rolar (8 do diário x 361 do Processo Vivo), sem animação com movimento reduzido
   (com dados fictícios) no lugar da vitrine animada, números medidos (8 x 361 andamentos), recursos em lista
   em vez de cartões iguais, sem contador animado. Chat do Evo, faixa de cookies e Pixel sem mudança.
   v1.4.5: Pixel da Meta (1514052090555698) só depois de "Aceitar" na faixa de cookies; link "Cookies" no rodapé;
@@ -138,18 +139,19 @@ p{margin:0}
 
 /* Abertura: título largo à esquerda, tela de verdade embaixo */
 .abertura{padding:64px 0 0}
-.abertura h1{font-size:clamp(36px,5.2vw,68px);letter-spacing:-.03em;line-height:1.04;max-width:16em}
-.abertura h1 .verde{color:var(--verde-tinta);display:block}
-.abertura-pe{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;margin-top:28px}
+.abertura-topo{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:56px;align-items:start}
+.abertura h1{font-size:clamp(36px,4.3vw,58px);font-weight:600;letter-spacing:-.025em;line-height:1.06;text-wrap:balance}
+.abertura h1 .verde{color:var(--verde-tinta)}
+.abertura-pe{display:grid;gap:26px;padding-top:10px}.abertura-pe>p{max-width:34ch;text-wrap:pretty}
 .abertura .lead{max-width:36em;font-size:clamp(17px,1.5vw,19px);color:var(--tinta-suave)}
 .acoes{display:flex;flex-wrap:wrap;gap:12px}
-.vitrine{margin-top:48px;position:relative}
+.vitrine{margin-top:56px;position:relative}
 .tela{position:relative;border:1px solid var(--linha);border-radius:var(--r-l);background:var(--superficie);box-shadow:var(--sombra-tela);overflow:hidden}
 .tela img{display:block;width:100%;height:auto}
 .legenda{margin-top:12px;font-size:14px;color:var(--tinta-fraca)}
-@media (max-width:860px){.abertura{padding-top:40px}.abertura-pe{grid-template-columns:1fr;gap:24px}}
+@media (max-width:900px){.abertura{padding-top:40px}.abertura-topo{grid-template-columns:1fr;gap:24px}.abertura-pe{padding-top:0}}
 /* No celular a tela é cortada à esquerda (a lista de peças), em vez de virar uma miniatura ilegível */
-@media (max-width:700px){.vitrine .tela img,.recurso-tela .tela img{width:175%;max-width:none}}
+@media (max-width:700px){.vitrine .tela img{width:125%;max-width:none}.recurso-tela .tela img{width:175%;max-width:none}}
 
 /* Seções */
 .secao{padding:112px 0}
@@ -157,6 +159,51 @@ p{margin:0}
 .secao h2{font-size:clamp(30px,3.6vw,46px);max-width:18em}
 .secao .intro{margin-top:16px;max-width:38em;font-size:18.5px;color:var(--tinta-suave)}
 @media (max-width:640px){.secao{padding:72px 0}}
+
+
+/* Herói: a tela do app sobre um painel com textura (dois planos que rolam em ritmos diferentes) */
+.palco{position:relative;border-radius:var(--r-l);overflow:hidden;padding:56px 56px 0;background-color:#0E2038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E"),
+  linear-gradient(160deg,#163057 0%,#0B192C 70%);
+  background-size:240px 240px,cover}
+.palco .tela{border-color:rgba(255,255,255,.14);border-bottom:0;border-radius:var(--r-l) var(--r-l) 0 0;box-shadow:0 30px 60px -20px rgba(0,0,0,.55);max-width:880px;margin-inline:auto}
+.palco .tela img{margin-bottom:-2%}
+@media (max-width:700px){.palco{padding:24px 0 0 20px}.palco .tela{border-right:0;border-radius:var(--r-l) 0 0 0}}
+@supports (animation-timeline:scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .palco{animation:palco-fundo linear both;animation-timeline:scroll(root);animation-range:0 700px}
+    .palco .tela{animation:palco-tela linear both;animation-timeline:scroll(root);animation-range:0 700px}
+  }
+}
+@keyframes palco-fundo{to{background-position:0 -60px,0 0}}
+@keyframes palco-tela{from{transform:translateY(28px)}to{transform:translateY(-12px)}}
+
+/* Momento de destaque: grade de 361 quadrados que se acende com a rolagem */
+@property --n{syntax:"<integer>";inherits:true;initial-value:361}
+.pico-medida{min-width:0}
+.pico-contagem{display:flex;align-items:baseline;gap:14px;margin:0 0 18px;color:var(--tinta-suave)}
+.pico-n{font-size:clamp(48px,5.4vw,76px);font-weight:500;line-height:1;letter-spacing:-.04em;color:var(--verde-tinta);min-width:3.2ch;font-variant-numeric:tabular-nums}
+.pico-n::after{counter-reset:pv var(--n);content:counter(pv)}
+.pico-celulas{display:grid;grid-template-columns:repeat(19,minmax(0,1fr));gap:4px;max-width:440px}
+.pico-celulas i{display:block;aspect-ratio:1;border-radius:2px;background:var(--verde);opacity:clamp(.12,calc(var(--n) - var(--i)),1);transition:none}
+.pico-celulas i.d{background:var(--tinta);opacity:1}
+.pico-legenda{display:grid;gap:10px;margin:24px 0 0;padding:18px 0 0;border-top:1px solid var(--linha);max-width:440px}
+.pico-legenda div{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;align-items:baseline}
+.pico-legenda dt{display:flex;align-items:center;gap:8px;font-size:22px;font-weight:500}
+.pico-legenda dd{margin:0;color:var(--tinta-suave);font-size:15px}
+.pico-chave{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--verde)}
+.pico-chave-diario{background:var(--tinta)}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .pico-grade{animation:pico-encher linear both;animation-timeline:view();animation-range:entry 60% cover 55%}
+    @media (min-width:900px) and (min-height:700px){
+      .pico-trilho{height:190vh;view-timeline-name:--pico}
+      .pico-palco{position:sticky;top:max(72px,calc(50vh - 300px));min-height:520px}
+      .pico .pico-grade{animation-timeline:--pico;animation-range:contain 0% contain 75%}
+    }
+  }
+}
+@keyframes pico-encher{from{--n:8}to{--n:361}}
 
 /* O problema: texto à esquerda, comparação em números à direita */
 .problema{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:center}
@@ -376,7 +423,8 @@ p{margin:0}
   <!-- ABERTURA -->
   <section class="abertura" aria-labelledby="titulo">
     <div class="envolve">
-      <h1 id="titulo">O diário oficial não mostra a contestação. <span class="verde">O Processo Vivo mostra.</span></h1>
+      <div class="abertura-topo">
+      <h1 id="titulo">O diário oficial não mostra a contestação. O&nbsp;<span class="verde">Processo&nbsp;Vivo</span> mostra.</h1>
       <div class="abertura-pe">
         <p class="lead">Seus processos verificados todos os dias, com as peças que as partes juntaram: petição, contestação, laudo. Peças no TJGO.</p>
         <div class="acoes">
@@ -384,32 +432,41 @@ p{margin:0}
           <a class="botao botao-secundario" href="#planos">Ver planos</a>
         </div>
       </div>
+      </div>
       <figure class="vitrine" style="margin-inline:0;margin-bottom:0">
+        <div class="palco">
         <div class="tela">
           <picture>
-            <source srcset="img/app-pasta-escuro.webp" media="(prefers-color-scheme: dark)">
-            <img src="img/app-pasta.webp" width="1600" height="911" fetchpriority="high" alt="Pasta digital do Processo Vivo: à esquerda, a lista de peças do processo (petição inicial, procuração, despacho, contestação, réplica, laudo pericial, decisão, sentença); à direita, a contestação aberta para leitura.">
+            <source srcset="img/app-pasta-escuro-foco.webp" media="(prefers-color-scheme: dark)">
+            <img src="img/app-pasta-foco.webp" width="1024" height="757" fetchpriority="high" alt="Pasta digital do Processo Vivo: à esquerda, a lista de peças do processo (petição inicial, procuração, despacho, contestação, réplica, laudo pericial, decisão, sentença); à direita, a contestação aberta para leitura.">
           </picture>
+        </div>
         </div>
         <figcaption class="legenda">A Pasta digital, com a contestação aberta ao lado da lista de peças. Processo e partes fictícios.</figcaption>
       </figure>
     </div>
   </section>
 
-  <!-- PROBLEMA -->
-  <section class="secao" aria-labelledby="t-problema">
-    <div class="envolve problema">
-      <div class="problema-texto revela">
-        <h2 id="t-problema">O diário publica o que o juízo decide. O resto fica no tribunal.</h2>
-        <p>O que a outra parte alegou, o que o perito concluiu, o documento que foi juntado: <strong>nada disso sai no diário oficial.</strong></p>
-        <p>Para ver, é abrir o sistema do tribunal, processo por processo. O Processo Vivo entra com o seu acesso e traz as peças para você.</p>
-      </div>
-      <div class="revela">
-        <div class="comparacao">
-          <div class="pouco"><b class="mono">8</b><span><strong>andamentos</strong>em sistemas que leem só o diário oficial</span></div>
-          <div class="muito"><b class="mono">361</b><span><strong>andamentos</strong>no Processo Vivo, que junta tribunal, DataJud e diário</span></div>
+  <!-- PROBLEMA: o momento de destaque. Rolando, a grade vai de 8 a 361 andamentos (números medidos). -->
+  <section class="secao pico" aria-labelledby="t-problema">
+    <div class="pico-trilho">
+      <div class="envolve problema pico-palco">
+        <div class="problema-texto">
+          <h2 id="t-problema">O diário publica o que o juízo decide. O&nbsp;resto fica no tribunal.</h2>
+          <p>O que a outra parte alegou, o que o perito concluiu, o documento que foi juntado: <strong>nada disso sai no diário oficial.</strong></p>
+          <p>Para ver, é abrir o sistema do tribunal, processo por processo. O Processo Vivo entra com o seu acesso e traz as peças para você.</p>
         </div>
-        <p class="comparacao-nota">O mesmo processo, medido em 2026.</p>
+        <div class="pico-medida">
+          <div class="pico-grade" id="pico-grade">
+            <p class="pico-contagem"><b class="mono pico-n" aria-hidden="true"></b><span class="so-leitor">361</span> <span>andamentos no mesmo processo</span></p>
+            <div class="pico-celulas" id="pico-celulas" aria-hidden="true"></div>
+          </div>
+          <dl class="pico-legenda">
+            <div><dt><i class="pico-chave pico-chave-diario" aria-hidden="true"></i><b class="mono">8</b></dt><dd>em sistemas que leem só o diário oficial</dd></div>
+            <div><dt><i class="pico-chave" aria-hidden="true"></i><b class="mono">361</b></dt><dd>no Processo Vivo, que junta tribunal, DataJud e diário</dd></div>
+          </dl>
+          <p class="comparacao-nota">Cada quadrado é um andamento. O mesmo processo, medido em 2026.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -707,6 +764,15 @@ p{margin:0}
     var ns = 'http://www.w3.org/2000/svg';
     var s = document.createElementNS(ns, 'svg'); s.setAttribute('class', cls || 'icone'); s.setAttribute('aria-hidden', 'true');
     var u = document.createElementNS(ns, 'use'); u.setAttribute('href', '#' + id); s.appendChild(u); return s;
+  }
+
+
+  // ---------- Momento de destaque: 361 quadrados, os 8 primeiros são o que o diário mostra ----------
+  var celulas = document.getElementById('pico-celulas');
+  if (celulas) {
+    var frag = document.createDocumentFragment();
+    for (var c = 0; c < 361; c++) { var q = document.createElement('i'); q.style.setProperty('--i', String(c)); if (c < 8) q.className = 'd'; frag.appendChild(q); }
+    celulas.appendChild(frag);
   }
 
   // ---------- Entrada suave das seções ao rolar (nenhuma com movimento reduzido) ----------
