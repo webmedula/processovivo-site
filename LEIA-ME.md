@@ -1,3 +1,8 @@
+# Site v1.4.8 (14/11/2026)
+
+- O vídeo do topo toca uma vez quando a página abre (4,4 s) e para no último quadro, com a advogada olhando os papéis. Sem loop. `img/heroi-papeis.mp4` agora tem 230 KB.
+- Quem desativa animação ou usa economia de dados vê só esse último quadro, parado (`img/heroi-papeis-fim.webp`).
+
 # Site v1.4.7 (14/11/2026)
 
 - O fundo do topo agora é o vídeo, com os papéis voando de verdade: só a cena da advogada (os 4,4 s iniciais, indo e voltando, 8,8 s em loop), sem áudio, `img/heroi-papeis.mp4` (360 KB). A tela com o logo escrito errado ficou de fora.
