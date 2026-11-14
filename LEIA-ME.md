@@ -1,3 +1,9 @@
+# Site v1.4.9 (14/11/2026)
+
+- Favicon refeito a partir do símbolo do logo (o documento azul com o ✓ verde, o mesmo do cabeçalho): `favicon.ico` (16, 32 e 48 px, o arquivo que o navegador e o Google procuram sozinhos e que antes dava 404), `favicon-16.png`, `favicon-32.png`, `apple-touch-icon.png` (180 px, fundo branco inteiro, sem canto transparente que o iPhone pinta de preto), `icon-192.png`, `icon-512.png` e `site.webmanifest`.
+- Os links levam `?v=2`, para o navegador trocar o ícone que guardou antes.
+- Termos e Privacidade apontavam para `img/favicon.svg`, que não está no repositório; agora usam os mesmos ícones da página principal.
+
 # Site v1.4.8 (14/11/2026)
 
 - O vídeo do topo toca uma vez quando a página abre (4,4 s) e para no último quadro, com a advogada olhando os papéis. Sem loop. `img/heroi-papeis.mp4` agora tem 230 KB.
