@@ -1,3 +1,11 @@
+# Site v1.5.0 (14/11/2026)
+
+- Visual novo, para tirar a "cara de IA": fonte Schibsted Grotesk (números em IBM Plex Mono), o verde do logo como única cor de destaque, botões marinho, cantos iguais em tudo.
+- Telas reais do aplicativo, com processo e partes fictícios, no lugar da vitrine animada: `img/app-pasta.webp` e `img/app-atualizacoes.webp` (e as versões `-escuro` para o tema escuro).
+- Números medidos (8 x 361 andamentos; 278 documentos; 130 processos por OAB) no lugar do contador animado.
+- Recursos em lista, sem a fileira de cartões iguais; segurança e cobertura em tabela; textos sem travessão.
+- Sem mudança: chat do Evo, faixa de cookies, Pixel, planos lidos do app, Termos e Privacidade.
+
 # Site v1.4.5 (09/11/2026)
 
 - Pixel da Meta (1514052090555698) atrás de uma faixa de cookies: só carrega depois de "Aceitar". "Recusar" não carrega nada.
